@@ -31,6 +31,7 @@ module.exports = {
                 type: Sequelize.ENUM,
                 values: ["BORROWED", "RETURNED", "RESERVED"],
                 defaultValue: "BORROWED",
+                allowNull:false
             },
             createdAt: {
                 allowNull: false,

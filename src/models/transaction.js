@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.ENUM,
                 values: ["BORROWED", "RETURNED", "RESERVED"],
                 defaultValue: "BORROWED",
+                allowNull:false
             },
         },
         {
