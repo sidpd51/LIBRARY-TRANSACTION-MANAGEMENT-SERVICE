@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.hasOne(models.Fine, {
+                foreignKey:'transactionId',
+                onDelete:'CASCADE'
+            })
         }
     }
     Transaction.init(
