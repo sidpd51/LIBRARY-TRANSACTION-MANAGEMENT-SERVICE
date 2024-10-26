@@ -1,11 +1,8 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
-let result = new Date();
-result.setDate(result.getDate() + 7);
-
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable("Transactions", {
+        await queryInterface.createTable("reservations", {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -20,24 +17,16 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            borrowedAt: {
+            reservationDate: {
                 type: Sequelize.DATE,
+                allowNull: false,
                 defaultValue: new Date(),
-                allowNull: false,
             },
-            dueDate: {
-                type: Sequelize.DATE,
-                defaultValue: result,
-                allowNull: false,
-            },
-            returnDate: {
-                type: Sequelize.DATE,
-            },
-            transactionStatus: {
+            status: {
                 type: Sequelize.ENUM,
-                values: ["BORROWED", "RETURNED", "RESERVED"],
-                defaultValue: "BORROWED",
                 allowNull: false,
+                values: ["ACTIVE", "FULLFILL", "CANCELLED"],
+                defaultValue: "ACTIVE",
             },
             createdAt: {
                 allowNull: false,
@@ -50,6 +39,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable("Transactions");
+        await queryInterface.dropTable("reservations");
     },
 };

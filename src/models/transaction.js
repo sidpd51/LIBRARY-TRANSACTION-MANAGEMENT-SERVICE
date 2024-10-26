@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         {
             userId: { type: DataTypes.INTEGER, allowNull: false },
             itemId: { type: DataTypes.INTEGER, allowNull: false },
-            borrowedAt: { type: DataTypes.DATE, defaultValue: new Date() },
-            dueDate: { type: DataTypes.DATE, defaultValue: result },
+            borrowedAt: { type: DataTypes.DATE, defaultValue: new Date(), allowNull:false },
+            dueDate: { type: DataTypes.DATE, defaultValue: result, allowNull:false },
             returnDate: { type: DataTypes.DATE },
             transactionStatus: {
                 type: DataTypes.ENUM,
