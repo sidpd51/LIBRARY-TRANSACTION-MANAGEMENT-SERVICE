@@ -63,7 +63,7 @@ class TransactionService {
                 console.log("fine created!")
             }
 
-            await this.transactionRepository.updateTransaction(transactionId,{
+            const currentTransaction =await this.transactionRepository.updateTransaction(transactionId,{
                 returnDate: new Date(),
                 transactionStatus: "RETURNED"
             })
@@ -78,7 +78,7 @@ class TransactionService {
                     copiesTotal: copiesTotal,
                 }
             );
-            return transaction
+            return currentTransaction
 
         } catch (error) {
             console.log("something went wrong in service layer");

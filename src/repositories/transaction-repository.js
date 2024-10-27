@@ -13,16 +13,22 @@ class TransactionRepository {
 
     async updateTransaction(transactionId, data) {
         try {
-            const transaction = await Transaction.update(data, {
-                where: {
-                    id: transactionId,
-                },
-            });
-            if (transaction[0]) {
-                return transaction[0];
-            }
+            // const transaction = await Transaction.update(data, {
+            //     where: {
+            //         id: transactionId,
+            //     },
+            // });
 
-            throw { err: "transaction not found" };
+            // if (transaction[0]) {
+            //     return transaction[0];
+            // }
+            const transaction = await Transaction.findByPk(transactionId);
+            transaction.returnDate = data.returnDate;
+            transaction.amount = data.amount;
+            if (!transaction) {
+                throw { err: "transaction not found" };
+            }
+            return transaction;
         } catch (error) {
             console.log("something went wrong in repository layer");
             throw error;
@@ -42,7 +48,7 @@ class TransactionRepository {
         }
     }
 
-    async getAllTransactions(){
+    async getAllTransactions() {
         try {
             const transactions = await Transaction.findAll({});
             if (!transactions) {
