@@ -4,7 +4,7 @@ const transactionService = new TransactionService();
 
 const borrowItem = async (req, res) => {
     try {
-        const transaction = await transactionService.create(req.body);
+        const transaction = await transactionService.borrowItem(req.body);
         return res.status(201).json({
             data: transaction,
             success: true,

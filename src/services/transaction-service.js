@@ -1,10 +1,11 @@
-const TransactionRepository = require("../repositories/transaction-repository.js");
+const {TransactionRepository,FineRepository} = require("../repositories/index.js");
 const { CATALOG_SERVICE } = require("../config/serverConfig.js");
 const axios = require("axios");
 
 class TransactionService {
     constructor() {
         this.transactionRepository = new TransactionRepository();
+        this.fineRepository = new FineRepository()
     }
 
     async borrowItem(data) {
@@ -46,23 +47,31 @@ class TransactionService {
             );
             //compare return date and due date
             let dueDate = new Date(transaction.dueDate);
-            dueDate = dueDate.toLocaleDateString();
-            let currentDate = new Date().toLocaleDateString();
-
-            if (currentDate>dueDate) {
-                //createfine logic
+            let dueDateStr = dueDate.toLocaleDateString();
+            let currentDate = new Date();
+            let currentDateStr = new Date().toLocaleDateString();
+            
+            //fine logic
+            if (currentDateStr>dueDateStr) {
                 
+                let days = Math.floor((currentDate-dueDate)/(1000*3600*24))
+                let amount = 5*days;
+                await this.fineRepository.create({
+                    transactionId,
+                    amount
+                })
+                console.log("fine created!")
             }
 
             await this.transactionRepository.updateTransaction(transactionId,{
                 returnDate: new Date(),
                 transactionStatus: "RETURNED"
             })
+
             const item = await axios.get(`${CATALOG_SERVICE}/api/v1/books/${transaction.itemId}`)
             
             let copiesTotal = item.data.data.copiesTotal
             copiesTotal++
-            console.log(copiesTotal)
             await axios.patch(
                 `${CATALOG_SERVICE}/api/v1/books/${transaction.itemId}`,
                 {
