@@ -1,5 +1,6 @@
 const {
-    createTransaction
+    borrowItem,
+    returnItem
 } = require('../../controllers/transaction-controller.js')
 
 const express = require('express')
@@ -7,7 +8,8 @@ const express = require('express')
 
 const router = express.Router()
 
-router.post('/transactions',createTransaction)
+router.post('/borrow',borrowItem)
+router.patch('/return/:id',returnItem)
 
 module.exports = router
 
