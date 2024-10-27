@@ -7,7 +7,7 @@ class TransactionService {
         this.transactionRepository = new TransactionRepository();
     }
 
-    async create(data) {
+    async borrowItem(data) {
         try {
             const item = await axios.get(
                 `${CATALOG_SERVICE}/api/v1/books/${data.itemId}`
@@ -51,17 +51,18 @@ class TransactionService {
 
             if (currentDate>dueDate) {
                 //createfine logic
+                
             }
 
             await this.transactionRepository.updateTransaction(transactionId,{
                 returnDate: new Date(),
                 transactionStatus: "RETURNED"
             })
-
             const item = await axios.get(`${CATALOG_SERVICE}/api/v1/books/${transaction.itemId}`)
-            let copiesTotal = item.copiesTotal
+            
+            let copiesTotal = item.data.data.copiesTotal
             copiesTotal++
-
+            console.log(copiesTotal)
             await axios.patch(
                 `${CATALOG_SERVICE}/api/v1/books/${transaction.itemId}`,
                 {

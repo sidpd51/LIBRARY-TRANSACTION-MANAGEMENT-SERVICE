@@ -1,10 +1,10 @@
-const { TransactionService } = require('../services/index.js')
+const { TransactionService } = require("../services/index.js");
 
-const transactionService = new TransactionService()
+const transactionService = new TransactionService();
 
-async function borrowItem(req,res) {
+const borrowItem = async (req, res) => {
     try {
-        const transaction = await transactionService.create(req.body)
+        const transaction = await transactionService.create(req.body);
         return res.status(201).json({
             data: transaction,
             success: true,
@@ -19,11 +19,11 @@ async function borrowItem(req,res) {
             err: error,
         });
     }
-}
+};
 
-async function returnItem(req,res) {
+const returnItem = async (req, res) => {
     try {
-        const transaction = await transactionService.returnItem(req.params.id)
+        const transaction = await transactionService.returnItem(req.params.id);
         return res.status(201).json({
             data: transaction,
             success: true,
@@ -38,11 +38,10 @@ async function returnItem(req,res) {
             err: error,
         });
     }
-}
-
-async function getAllTransactions(req,res) {
+};
+const getAllTransactions = async (req, res) => {
     try {
-        const transactions = await transactionService.getAll()
+        const transactions = await transactionService.getAll();
         return res.status(201).json({
             data: transactions,
             success: true,
@@ -57,9 +56,9 @@ async function getAllTransactions(req,res) {
             err: error,
         });
     }
-}
+};
 module.exports = {
     borrowItem,
     returnItem,
-    getAllTransactions
-}
+    getAllTransactions,
+};
