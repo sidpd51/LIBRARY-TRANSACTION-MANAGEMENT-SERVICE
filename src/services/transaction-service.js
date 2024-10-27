@@ -75,6 +75,16 @@ class TransactionService {
             throw error;
         }
     }
+
+    async getAll(){
+        try {
+            const transactions = await this.transactionRepository.getAllTransactions()
+            return transactions
+        } catch (error) {
+            console.log("something went wrong in service layer")
+            throw error
+        }
+    }
 }
 
 module.exports = TransactionService;

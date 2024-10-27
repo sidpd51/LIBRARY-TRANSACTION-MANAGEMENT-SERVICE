@@ -41,6 +41,19 @@ class TransactionRepository {
             throw error;
         }
     }
+
+    async getAllTransactions(){
+        try {
+            const transactions = await Transaction.findAll({});
+            if (!transactions) {
+                throw { err: "transaction not found" };
+            }
+            return transactions;
+        } catch (error) {
+            console.log("something went wrong in repository layer");
+            throw error;
+        }
+    }
 }
 
 module.exports = TransactionRepository;

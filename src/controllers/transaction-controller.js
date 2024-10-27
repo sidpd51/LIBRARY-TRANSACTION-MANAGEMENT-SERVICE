@@ -40,7 +40,26 @@ async function returnItem(req,res) {
     }
 }
 
+async function getAllTransactions(req,res) {
+    try {
+        const transactions = await transactionService.getAll()
+        return res.status(201).json({
+            data: transactions,
+            success: true,
+            message: "Successfully got all transactions!",
+            err: {},
+        });
+    } catch (error) {
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to get the transactions!",
+            err: error,
+        });
+    }
+}
 module.exports = {
     borrowItem,
-    returnItem
+    returnItem,
+    getAllTransactions
 }
